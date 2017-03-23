@@ -123,24 +123,53 @@ ngx_http_google_inject_subs(ngx_conf_t * cf)
                                          "subs_filter_types", 1,
                                          "*"))
       break;
-    
+
+    if (ngx_http_google_inject_subs_args(cf,
+                                         "subs_filter", 3,
+                                         "(=\"|='|\\()/(?!/)([^\"'\\(]*?)(?=\\.png|\\.jpg|\\.gif|\\.webp|\\.ico)",
+                                         "$1//www.google.cn/$2",
+                                         "igr"))
+      break;
+
+    if (ngx_http_google_inject_subs_args(cf,
+                                         "subs_filter", 3,
+                                         "((www)|(ssl))\\.gstatic\\.com/(.*?)(?=\\.png|\\.jpg|\\.gif|\\.webp)",
+                                         "www.gstatic.cn/$4",
+                                         "igr"))
+      break;
+
+    if (ngx_http_google_inject_subs_args(cf,
+                                         "subs_filter", 3,
+                                         "encrypted-([0-9A-Za-z.-]+)\\.gstatic\\.com",
+                                         "encrypted-$1.gstatic.cn",
+                                         "igr"))
+      break;
+
     if (ngx_http_google_inject_subs_args(cf,
                                          "subs_filter", 3,
                                          "([0-9A-Za-z.-]+\\.gstatic\\.com)",
                                          "$google_host/!$1",
                                          "igr"))
       break;
-    
+
+    // Add id.google.com proxy
+    if (ngx_http_google_inject_subs_args(cf,
+                                         "subs_filter", 3,
+                                         "((id)\\.google\\.com)",
+                                         "$google_host/!$1",
+                                         "igr"))
+      break;
+
     if (ngx_http_google_inject_subs_args(cf,
                                          "subs_filter", 3,
                                          "((apis)\\.google\\.com)",
                                          "$google_host/!$1",
                                          "igr"))
       break;
-    
+
     if (ngx_http_google_inject_subs_args(cf,
                                          "subs_filter", 3,
-                                         "((www)|(images))\\.google\\.[0-9a-z.]+",
+                                         "((www)|(images))\\.google\\.(?!cn)[0-9a-z.]+",
                                          "$google_host",
                                          "igr"))
       break;
