@@ -126,7 +126,7 @@ ngx_http_google_inject_subs(ngx_conf_t * cf)
 
     if (ngx_http_google_inject_subs_args(cf,
                                          "subs_filter", 3,
-                                         "(=\"|='|\\()/(?!/)([^\"'\\(]*?)(?=\\.png|\\.jpg|\\.gif|\\.webp|\\.ico)",
+                                         "(=[\"']|url\\([\"']?)/(?!/)([^\"'\\)]*?)(?=\\.png|\\.jpg|\\.gif|\\.webp|\\.ico)",
                                          "$1//www.google.cn/$2",
                                          "igr"))
       break;
